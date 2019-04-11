@@ -13,13 +13,13 @@ pipeline {
         branch 'PR-*'
       }
       environment {
-        PREVIEW_VERSION = "3.3.3"
+        PREVIEW_VERSION = "4.4.4"
         PREVIEW_NAMESPACE = "$APP_NAME-$BRANCH_NAME".toLowerCase()
         HELM_RELEASE = "$PREVIEW_NAMESPACE".toLowerCase()
       }
       steps {
         container('ruby') {
-          sh "export VERSION=3.3.3 && skaffold build -f skaffold.yaml"
+          sh "export VERSION=4.4.4 && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           dir('./charts/preview') {
             sh "make preview"
@@ -40,11 +40,11 @@ pipeline {
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
 
-          sh "jx step tag --version 3.3.3"
+          sh "jx step tag --version 4.4.4"
           sh "curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64"
           sh "chmod +x skaffold"
           sh "mv skaffold /usr/local/bin"
-          sh "export VERSION=3.3.3 && skaffold build -f skaffold.yaml"
+          sh "export VERSION=4.4.4 && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
         }
       }
@@ -59,6 +59,7 @@ pipeline {
             sh "jx step changelog --version v\$(cat ../../VERSION)"
 
             // release the helm chart
+            sh "jx helm repo add jenkins-x http://chartmuseum.jx.192.168.99.158.nip.io"
             sh "jx step helm release"
 
             // promote through all 'Auto' promotion Environments
