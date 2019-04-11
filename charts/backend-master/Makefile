@@ -1,4 +1,4 @@
-CHART_REPO := http://jenkins-x-chartmuseum:8080
+CHART_REPO := http://chartmuseum.jx.192.168.99.158.nip.io
 CURRENT=$(pwd)
 NAME := backend-master
 OS := $(shell uname)
@@ -36,7 +36,7 @@ ifeq ($(OS),Darwin)
 	sed -i "" -e "s/tag:.*/tag: $(RELEASE_VERSION)/" values.yaml
 else ifeq ($(OS),Linux)
 	sed -i -e "s/version:.*/version: $(RELEASE_VERSION)/" Chart.yaml
-	sed -i -e "s/repository:.*/repository: $(DOCKER_REGISTRY)\/$(ORG)\/$(APP_NAME)/" values.yaml
+        sed -i -e "s|repository:.*|repository: $(DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION)|" values.yaml
 	sed -i -e "s/tag:.*/tag: $(RELEASE_VERSION)/" values.yaml
 else
 	echo "platfrom $(OS) not supported to release from"
