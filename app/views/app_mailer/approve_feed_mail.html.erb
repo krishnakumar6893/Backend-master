@@ -1,0 +1,2 @@
+Hello,<br />
+<p>A post has been uploaded by <%= @user.try(:username) || 'a user' %>. Please <%= link_to 'click on this link', controller: 'admin/photos', action: 'unapproved', only_path: false, user_id: @user.id %> to approve whether it is a spam or not.</p>

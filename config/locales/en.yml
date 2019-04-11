@@ -1,0 +1,14 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  hello: "Hello world"
+  views:
+    pagination:
+      previous: "&lsaquo; Previous"
+      truncate: ""
+  links:
+    itunes: https://itunes.apple.com/in/app/fontli/id506650372%{params}
+    google_play: https://play.google.com/store/apps/details?id=com.imaginea.fontli%{params}
+  response:
+    forgot_password: If the username/email provided by you is available in our database, then you would receive further instructions at the specified email-address

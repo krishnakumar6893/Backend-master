@@ -1,0 +1,16 @@
+<%= render 'shared/flash_notices' %>
+<div id='show_collection'>
+  <%= image_tag @collection.cover_photo.url_thumb, class: 'pull-right' if @collection.cover_photo %>
+  <dl class="dl-horizontal">
+    <dt>Name:</dt>
+    <dd><%= @collection.name %></dd>
+    <dt>Description:</dt>
+    <dd><%= @collection.description %></dd>
+  </dl>
+  <div id='collection_photos'>
+    <h3>Photos</h3>
+    <%= render 'admin/photos', photos: @photos, cover_photo: true %>
+    <%= paginate @photos %>
+  </div>
+</div>
+

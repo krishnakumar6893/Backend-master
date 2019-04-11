@@ -1,0 +1,21 @@
+<div class="signin" >
+  <div class="innershade">
+    <a class="img-cross">
+      <img src="<%= asset_path('cross-signin.png') %>" width="22" height="22" alt="" title="" />
+    </a>
+    <div class="image-container">
+      <img src="<%= asset_path('fontli-logo.png') %>" width="150" height="85" alt="" title="" />
+      <h2 class="signin">Sign in</h2>
+    </div>
+
+    <div class="signin-panel">
+      <div class="credential-panel">
+      <%= form_tag login_path(:default) do %>
+        <input type="text" name="username" placeholder="Username or Email Id" class="credential" /><br/>
+        <input type="password" name="password" placeholder="Password" class="credential" /><br />
+        <button>Sign in</button>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>

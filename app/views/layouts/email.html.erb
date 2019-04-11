@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body style="margin:0;padding:0;background:#eaeef1; padding:10px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="body" style='border-collapse:collapse;width:100%;width:566px;margin:0 auto;text-align:center;padding-top:10px;font-family:Trebuchet MS, "Arial","sans-serif" !important;'>
+      <tr>
+        <td style="border-collapse:collapse;padding:0px;">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cont-a" style="border-collapse:collapse;width:100%;background:#fff;">
+            <tr>
+              <td style="border-collapse:collapse;padding:0px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;">
+                  <tr>
+                    <td class="td-width td-a" style="border-collapse:collapse;padding:0px;width:570px;position:relative;">
+                      <img class="banner" src="<%= asset_path('email/banner.png') %>" style="border:0 none;height:auto;line-height:100%;outline:none;text-decoration:none;width:100%;"/>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cont-b" style="border-collapse:collapse;width:100%;background:#fff;">
+            <tr>
+              <td class="td-side" style="border-collapse:collapse;padding:0px;width:25px;"></td>
+              <td style="border-collapse:collapse;padding:0px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;">
+                  <tr>
+                    <td class="td-width" style="border-collapse:collapse;padding:0px;width:570px;position:relative;">
+                      <%= yield %>
+                      <a class="link" href="<%= itunes_url + '/?utm_source=email_click&utm_campaign=iTunes&utm_medium=image' %>" style="display:inline-block;margin-top:20px;margin-bottom:30px;">
+                        <img src="<%= asset_path('email/link.png') %>" style="height:auto;line-height:100%;outline:none;text-decoration:none;border:0 none;"/>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td class="td-side" style="border-collapse:collapse;padding:0px;width:25px;"></td>
+            </tr>
+          </table>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cont-c" style="border-collapse:collapse;width:100%;">
+            <tr>
+              <td style="border-collapse:collapse;padding:0px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;">
+                  <tr>
+                    <td class="td-width td-width-custom" style="border-collapse:collapse;width:570px;position:relative;padding:0px;">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;">
+                        <tr>
+                          <td colspan="4">
+                            <p style="margin:0px;color:#aaadb0;font-size:15px"><label style="padding-left:5px;">You are receiving this email because you have installed fontli app.</label></p>
+                            <a href="<%= unsubscribe_url(@user) %>" target="_blank" style="color:#aaadb0;font-size:15px;">Unsubscribe</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="td-ba" style="border-collapse:collapse;padding:0px;width:110px;vertical-align:middle;height:50px;">
+                            <p style="margin:0px;color:#aaadb0;font-size:15px;float:left;"><label style="padding-left:5px;">Follow us on </label></p>
+                          </td>
+                          <td class="td-bb" style="border-collapse:collapse;padding:0px;width:35px;vertical-align:middle;height:50px;">
+                            <p style="margin:0px;color:#aaadb0;font-size:15px;float:left;">
+                              <a href="https://www.facebook.com/Fontli" style="display:inline-block;">
+                                <img src="<%= asset_path('email/logo-fb.png') %>" style="height:auto;line-height:100%;outline:none;text-decoration:none;border:0 none;" />
+                              </a>
+                            </p>
+                          </td>
+                          <td class="td-bc" style="border-collapse:collapse;padding:0px;width:35px;vertical-align:middle;height:50px;">
+                            <p style="margin:0px;color:#aaadb0;font-size:15px;float:left;">
+                              <a href="https://twitter.com/Fontli" style="display:inline-block;">
+                                <img src="<%= asset_path('email/logo-tw.png') %>" style="height:auto;line-height:100%;outline:none;text-decoration:none;border:0 none;" />
+                              </a>
+                            </p>
+                          </td>
+                          <td class="td-bd" style="border-collapse:collapse;padding:0px;width:400px;vertical-align:middle;text-align:right;height:50px;"> 
+                            <p style="margin:0px;float:left;float:right;color:#aaadb0;font-size:15px;">
+                              <label style="padding-right:5px;">&copy; Fontli 2016</label>
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <img src="http://www.google-analytics.com/collect?v=1&t=event&tid=UA-89616539-1&uid=<%= @user.id %>&dp=email&ec=email&ea=open&el=open_email&cs=email_campaign&cm=email&cn=open_email_tracking"/>
+  </body>
+</html>

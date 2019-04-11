@@ -1,0 +1,21 @@
+<% unless section == 'profile-post' %>
+  <a href="<%= profile_path(u.id) %>" class="profile-img">
+    <img width="100%" height="100%" alt="profile-image" src="<%= u.url_thumb %>" />
+    <div class="overlap"></div>
+  </a>
+<% end %>
+<ul>
+  <% unless section == 'profile-post' %>
+    <li class="profile-name">
+      <a href="<%= profile_path(u.id) %>"><%= u.username %></a>
+    </li>
+  <% end %>
+  <li class="profile-detail popitup">
+    <%= photo_details_li(f) %>
+  </li>
+  <% unless f.address.blank? %>
+    <li class="profile-location">
+      <span><%= f.address %></span>
+    </li>
+  <% end %>
+</ul>

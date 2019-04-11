@@ -1,0 +1,161 @@
+<% user = @photo.user %>
+<% likes_cnt, comments_cnt, fonts_cnt = @photo.likes_count, @photo.comments_count, @photo.fonts_count %>
+<% fnts_map = fonts_map_for_comments @comments %>
+
+<div class="popup <%= @open_popup ? 'open' : 'closed' %>">
+  <div class="left-pop">
+    <div class="bigpic" data-id="<%= @photo.id.to_s %>">
+      <div class="img-overlay"></div>
+      <img src="<%= @photo.url(:large) %>" style="width:480px;height:480px;"/>
+      <a href="javascript:;" data-href='<%= show_feed_path(0) %>' class="set4"></a>
+      <a href="javascript:;" data-href='<%= show_feed_path(0) %>' class="set5"></a>
+
+      <div id='tag_locator' class='hidden'>
+        <img src='<%= asset_path('taglabelmark.png') %>' id="tag_labelmark" class="draggable" />
+        <p>Place this marker on the image where the font is spotted</p>
+      </div>
+    </div>
+    <div class="hidden" id="permalink_url" data='<%= @photo.permalink %>'></div>
+
+    <ul class="set1 icons">
+      <% (['a', 'b', 'c']).each do |char| %>
+      <li class="set1-<%= char %> <%= 'login-req' unless logged_in? %>">
+        <i></i>
+        <div class="hover"></div>
+      </li>
+      <% end %>
+    </ul>
+    <ul class="set1">
+      <li class='set1-cross'>
+        <a href='javascript:;' class='cross'></a>
+      </li>
+    </ul>
+
+    <ul class="set3">
+      <li class="profile-name">
+        <a href="<%= profile_path(user.id) %>">
+          <span><%= user.username %></span>
+        </a>
+      </li>
+      <li class="profile-dialog">
+        <span><%= truncate(@photo.caption, :length => 100) %></span>
+      </li>
+      <li class="profile-detail">
+        <%= photo_details_li %>
+      </li>
+    </ul>
+    <% if @photo.fonts_count > 0 %>
+    <% fnt = @photo.fonts.desc(:agrees_count).first %>
+    <div class="set3b">
+      <a href="<%= show_font_path(fnt.family_id, :font_id => fnt.id) %>">
+        <img src='<%= fnt.img_url %>' width="350px" />
+        <span class='pop-disclaimer'>
+          <%= fnt.display_name %>
+          <%= pluralize(fnt.agrees_count, 'Agree') %>
+          <img src="<%= asset_path('Agreed--Default.png') %>" width="22" height="18" title="Agree" />
+        </span>
+      </a>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="right-pop">
+    <header>
+      <span class='header-title'>Typetalk</span>
+      <a href="javascript:;" class="collapse flt-left"></a>
+      <a href="javascript:;" class="cross flt-right"></a>
+      <!--  <a href="javascript:;" class="settings flt-right"></a> -->
+    </header>
+    <div class="content-a">
+      <a class="propic" href="<%= profile_path(user.id) %>">
+        <img src="<%= user.url(:thumb) %>" width="100%" height="100%">
+        <div class="overlap"></div>
+      </a>
+      <ul>
+        <li class="a">
+          <a href="<%= profile_path(user.id) %>">
+            <span class="name"><%= user.username %></span>
+          </a>
+          <span class="time"><%= timestamp(@photo.created_at) %></span>
+        </li>
+        <li class="b">
+          <span><%= @photo.caption %></span>
+        </li>
+        <li class="c">
+          <style type="text/css">
+            .twitter-share-button { width:60px !important }
+          </style>
+          <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= @photo.permalink %>" data-text="@fontli, Fontli- discover and share pure type love!" data-count="none"></a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+          <a href="javascript:;" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=<%= CGI.escape(@photo.permalink) %>','facebook-share-dialog','width=626,height=436'); return false;" style="height:24px;width:64px;vertical-align:bottom;display:inline-block;"><img src="<%= asset_path('fb_share_button.png') %>" /></a>
+        </li>
+      </ul>
+    </div>
+    <div class="like-box pop-nav">
+      <a class='view-likes' href="javascript:;">
+        <%= pluralize(likes_cnt, 'like') %>
+      </a>
+      <a class='view-typetalk' href="javascript:;">
+        <%= pluralize(comments_cnt, 'comment') %>
+      </a>
+      <a class='view-spotted' data-url='<%= feed_fonts_path(:id => @photo.id) %>' href="javascript:;">
+        <%= pluralize(fonts_cnt, 'spotting') %>
+      </a>
+      <a href="javascript:;" class="like <%= 'login-req' unless logged_in? %>">
+        <img src="<%= asset_path('heartsmall.png') %>" />
+      </a>
+      <a href="javascript:;" class="like spot <%= 'login-req' unless logged_in? %>">
+        <img src="<%= asset_path('Spot-Selected.png') %>" />
+      </a>
+    </div>
+    <div style="clear:both;"></div>
+
+    <div class="like-box spot-search hidden">
+      <input type="text" name="spot-search" placeholder="search..."  style="color:#666" />
+    </div>
+    <div class="like-box spot-preview hidden">
+      <input type="text" class='search-input-bottom' name='spot-preview' placeholder="Type preview text..."  style="color:#666" />
+    </div>
+    <div class="aa-spotted content content-b" style="display:none;"></div>
+    <div class="aa-spot-list content content-b" style="display:none;"></div>
+    <div class="aa-spot-list-family content content-b" style="display:none;"></div>
+    <div class="aa-likes content content-b" style="display:none;">
+      <%= render 'liked_pop' %>
+    </div>
+    <div class="aa-typetalk content content-b" style='margin-bottom:50px;'>
+      <div class="comment-box clr">
+        <% if likes_cnt > 0 %>
+        <div class="recent-likes">
+          <% recent_likes = @likes[0..4] %>
+          <% recent_likes.each do |l| %>
+            <% u = @users_map[l.user_id].first %>
+            <a href="<%= profile_path(u.id) %>" class="propic">
+              <img src="<%= u.url_thumb %>" width="100%" height="auto" />
+              <div class="overlap"></div>
+            </a>
+          <% end %>
+          <a href="javascript:;" class="view-likes">
+            <% if likes_cnt > 0 && likes_cnt <= recent_likes.length %>
+              <br/><%= pluralize(likes_cnt, 'like') %>
+            <% end %>
+            <% if likes_cnt > recent_likes.length %>
+              <br/>+<%= pluralize(likes_cnt - recent_likes.length, 'like') %>
+            <% end %>
+          </a>
+          <div style='clear:left;'></div>
+        </div>
+        <% end %>
+
+        <% @comments.each do |c| %>
+          <% u = @users_map[c.user_id].first %>
+          <%= render 'shared/comment_content', :c => c, :u => u, :fnts_map => fnts_map %>
+        <% end %>
+      </div>
+    </div>
+    <div class="bottom-nav <%= 'hidden' unless logged_in? %>">
+      <form action="<%= socialize_feed_path(@photo.id, :modal => 'comment') %>" class='comment-form'>
+        <input type="text" name="comment" placeholder="Your Comment..." autocomplete='off' />
+      </form>
+    </div>
+  </div>
+</div>

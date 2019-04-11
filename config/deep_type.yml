@@ -1,0 +1,16 @@
+defaults: &defaults
+  provider: 'AWS'
+  aws_secret_access_key: <%= SECURE_TREE['aws_s3_secret'] %>
+  aws_access_key_id: <%= SECURE_TREE['aws_s3_key'] %>
+
+development:
+  <<: *defaults
+  bucket: "deep-type-staging"
+
+staging:
+  <<: *defaults
+  bucket: "deep-type-staging"
+
+production:
+  <<: *defaults
+  bucket: "deep-type-production"

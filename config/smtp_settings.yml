@@ -1,0 +1,29 @@
+defaults: &defaults
+  gmail:
+    :address: 'smtp.gmail.com'
+    :port: 587
+    :domain: 'fontli.com'
+    :user_name: 'admin@fontli.com'
+    :password: '<%= SECURE_TREE['email_pass'] %>'
+    :authentication: 'plain'
+    :enable_starttls_auto: true
+  ses:
+    :address: '<%= ENV['SES_SMTP_ADDRESS'] %>'
+    :port: 587
+    :domain: 'fontli.com'
+    :user_name: '<%= ENV['SES_SMTP_USERNAME'] %>'
+    :password: '<%= ENV['SES_SMTP_PASSWORD'] %>'
+    :authentication: 'plain'
+    :enable_starttls_auto: true
+
+development:
+  <<: *defaults
+  mailcatcher:
+   :address: "localhost"
+   :port: 1025 
+
+staging:
+  <<: *defaults
+
+production:
+  <<: *defaults

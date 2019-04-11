@@ -1,0 +1,44 @@
+<% content_for :custom_js do %>
+  <%= render 'shared/pinned_header_js' %>
+<% end %>
+
+<section id="stream">
+<div class="font-details">
+  <div class="wrapper">
+    <div class="left-panel">
+      <span><%= @font.owner %></span>
+      <h1><%= @font.display_name %></h1>
+      <p><%= @font.desc %></p>
+      <a href="<%= @font.myfonts_url || "#" %>" class="font-desc-view-more" target="blank">View more</a>
+    </div>
+    <div class='right-panel'>
+      <img src="<%= @font.image %>" width="290" height="auto" />
+      <span><%= @font.display_name %></span>
+    </div>
+  </div>
+</div>
+<div class="pro-header-d" id='pinned_header'>
+  <div class="wrapper">
+    <ul class="float-Lt">
+      <li class="font-detail-cta post <%= 'selected' if params[:type].nil? %>">
+        <a data-href="<%= show_font_path(@font.family_id, :font_id => @font.id) %>" remote=true><%= @font.tagged_photos_count %> Post</a>
+      </li>
+      <li class="font-detail-cta fav <%= 'selected' if params[:type] == 'fav' %>">
+        <a data-href="<%= show_font_path(@font.family_id, :font_id => @font.id, :type => 'fav') %>" remote=true><%= @font.favs_count %> Favourite</a>
+      </li>
+    </ul>
+    <div class="float-Rt">
+      <a href="<%= @font.myfonts_url || "#" %>" target="_blank">
+        <span>Buy at</span>
+        <img src="<%= asset_path('myfont.png') %>" width="76" height="39" alt="My Fonts" title="My Fonts" />
+      </a>
+    </div>
+  </div>
+</div>
+<section id="font_section_container">
+  <%= render '/shared/photo_list' %>
+</section>
+<div class="loader hidden" style="width:32px;margin:10px auto;">
+  <img src='<%= asset_path('ajax-loader-sm.gif') %>' alt='Loading...' />
+</div>
+</section>

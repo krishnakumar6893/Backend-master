@@ -1,0 +1,18 @@
+<div class='unsubscribe-container'>
+  <div class='unsubscribe'>
+    <h3>Unsubscribe Successful</h3>
+    <p>You have been unsubscribed from Fontli.</p>
+    <p>If you have a moment, please let us know why you unsubscribed:</p>
+    <%= form_tag unsubscribe_path, method: 'post' do %>
+      <% UnsubscriptionReason.default.each do |reason| %>
+        <%= radio_button_tag :reason_id, reason.id, false %>
+        <%= label_tag :reason_id, reason.description %><br />
+      <% end %>
+      <%= radio_button_tag :reason_id, false, false %>
+      <%= label_tag :reason_id, 'Other (fill in reason below)' %><br />
+      <%= text_field_tag :description, '', class: 'hide' %>
+      <%= submit_tag 'Submit' %>
+    <% end %>
+    <%= link_to '« Return to our website', root_path %>
+  </div>
+</div>

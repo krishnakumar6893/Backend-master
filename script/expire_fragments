@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require File.expand_path('../../config/environment', __FILE__)
+
+puts "Expiring all fragments..."
+Rails.cache.delete_matched /font_details_*/
+Rails.cache.delete_matched /sub_font_details_*/
+
+Stat.expire_popular_cache!
+puts "Done."

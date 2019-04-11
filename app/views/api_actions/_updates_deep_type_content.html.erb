@@ -1,0 +1,10 @@
+<% deep_type = n.notifiable %>
+<li class="sos">
+  <a href="http://openphoto/<%= deep_type.id.to_s %>">
+    <img class="ref-img" src='<%= deep_type.result_image_path %>' />
+  </a>
+  <div class="text">
+    <%= n.message %>
+  </div>
+  <div class="timestamp"><%= timestamp(deep_type.updated_at) %></div>
+</li>

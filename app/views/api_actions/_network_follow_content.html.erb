@@ -1,0 +1,15 @@
+<% recnt_frnd = @users_map[feeds.first.follower_id].first %>
+<% last_frnd = @users_map[feeds.last.follower_id].first %>
+<li class="follow">
+  <div class="text">
+    <a class="author" href="http://openprofile/<%= uid.to_s %>"><%= @users_map[uid].first.username %></a>started following <a class="author" style='padding-right:0px;' href="http://openprofile/<%= recnt_frnd.id.to_s %>"><%= recnt_frnd.username %></a><%= " and <a class='author' style='padding-right:0px;' href='http://openprofile/#{last_frnd.id.to_s}'>#{last_frnd.username}</a>".html_safe if feeds.length == 2 %><%= " and #{feeds.length - 1} others" if feeds.length > 2 %>.
+  </div>
+  <div class="clearfix">
+    <% feeds[0,5].each do |flw| %>
+      <div class="ref-usr">
+        <a class="ref-usr-ring" href="http://openprofile/<%= flw.follower_id.to_s %>"><img src='<%= @users_map[flw.follower_id].first.url_thumb %>' /></a>
+      </div>
+    <% end %>
+  </div>
+  <div class="timestamp"><%= timestamp(feeds.first.created_at) %></div>
+</li>

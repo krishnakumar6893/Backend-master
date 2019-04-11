@@ -1,0 +1,71 @@
+<section id="stream">
+<div class="pro-header-s">
+  <div class="wrapper">
+    <% total_count = @posts.length + @users.length + @fonts.length %>
+    <span>Search Results for <label><%= params[:search] %></label></span>
+    <ul class="float-Rt">
+      <li><a href="<%= @posts.any? ? '#posts' : 'javascript:;' %>"><%= @posts.length %> Posts</a></li>
+      <li><a href="<%= @users.any? ? '#users' : 'javascript:;' %>"><%= @users.length %> Members</a></li>
+      <li><a href="<%= @fonts.any? ? '#fonts' : 'javascript:;' %>"><%= @fonts.length %> Fonts</a></li>
+    </ul>
+  </div>
+</div>
+<div class="wrapper search-results-container">
+<% if @posts.any? %>
+  <% content_for :custom_js do %>
+    photoIds = <%= sanitize @posts.collect(&:id).to_json %>;
+  <% end %>
+
+  <div class="font-list" id="posts">
+    <h1><a href="javascript:;" class='expand-results'>Post (<%= @posts.length %>)</a></h1>
+    <ul>
+      <% @posts.each_with_index do |p, i| %>
+        <% if i == 10 %> <div id="posts_more"> <% end %>
+        <li rel='popitup' href='<%= show_feed_path(p) %>' data-id='<%= p.id %>'>
+          <a href="javascript:;">
+            <img src="<%= p.url_thumb %>" />
+          </a>
+        </li>
+        <% if (i > 9) && (i == @posts.length - 1) %> </div> <% end %>
+      <% end %>
+    </ul>
+  </div>
+  <div class='clear'></div>
+<% end %>
+<% if @users.any? %>
+  <div class="people-list" id="users">
+    <h1><a href="javascript:;" class='expand-results'>People (<%= @users.length %>)</a></h1>
+    <% @users.each_with_index do |u, i| %>
+      <% if i == 6 %> <div id="users_more"> <% end %>
+      <div class="profile-detail">
+        <a href="<%= profile_path(u.id) %>" class="pro-img-big-none">
+          <img width="100%" height="auto" src="<%= u.url_thumb %>" />
+          <div class="overlap-a-none"></div>
+        </a>
+        <div class="block-b-none">
+          <a class="header-user-none" href="<%= profile_path(u.id) %>">@<%= u.username %></a>
+          <h1><%= link_to truncate(u.full_name, :length => 12), profile_path(u.id), :title => u.full_name %></h1>
+        </div>
+      </div>
+      <% if (i > 5) && (i == @users.length - 1) %> </div> <% end %>
+    <% end %>
+  </div>
+  <div class='clear'></div>
+<% end %>
+<% if @fonts.any? %>
+  <div class="results-list" id="fonts">
+    <h1><a href="javascript:;" class='expand-results'>Fonts (<%= @fonts.length %>)</a></h1>
+    <% @fonts.each_with_index do |f, i| %>
+      <% if i == 6 %> <div id="fonts_more"> <% end %>
+      <div class="result">
+        <img width="270" height="64" src="<%= f.img_url %>" />
+        <span>
+          <a href="<%= show_font_path(f.family_id, :font_id => f.id) %>"><%= f.display_name %></a>
+        </span>
+      </div>
+      <% if (i > 5) && (i == @fonts.length - 1) %> </div> <% end %>
+    <% end %>
+  </div>
+  <div class='clear'></div>
+<% end %>
+</section>

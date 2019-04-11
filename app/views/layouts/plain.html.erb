@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= meta_title %></title>
+    <meta  content="charset=utf-8">
+    <meta name="description" content="Fontli lets designers and type-enthusiasts discover new fonts and great Typography. Using Fontli, you can capture interesting Typography from everyday life and share it with a vibrant community of type lovers." />
+    <meta name="keywords" content="<%= meta_keywords %>" />
+    <meta property="og:image" content="<%= @photo.try(:url) %>" />
+
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application" %>
+
+    <%= yield(:head) %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body id="plain">
+    <%= render 'shared/google_analytics' %>
+    <%= render 'shared/popup_container' %>
+    <div id='ajax_loader'><img src='<%= asset_path('ajax-loader-transparent.gif') %>' alt='Loading...' /></div>
+    <div id='qr_pop'>
+      <%= render 'shared/qr_popup' %>
+    </div>
+    <%= yield :pre_content %>
+
+    <div id="masterWrapper">
+      <header class="main">
+        <div class="wrapper">
+          <div class="primary">
+            <a href="/" id="logo">Fontli</a>
+            <span>discover, share, pure type love</span>
+          </div>
+        </div>
+      </header>
+
+      <section class='plain-bg'>
+        <%= yield %>
+      </section>
+
+      <footer class="main">
+        <%= render 'shared/footer', :perma => true %>
+      </footer>
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        setTypetalkHeight();
+        enableScrollBars('.aa-typetalk');
+      });
+    </script>
+    <%= yield(:custom_js) %> 
+  </body>
+</html>

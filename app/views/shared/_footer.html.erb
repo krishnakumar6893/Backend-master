@@ -1,0 +1,20 @@
+<% perma ||= false %>
+<div class="wrapper footer">
+  <ul>
+    <li><a href="/faq-web.html">FAQ</a></li>
+    <li><a href="http://storify.com/Fontli/fontli-buzz" target="blank">FONTLI Buzz</a></li>
+    <li><a href="/privacy-web.html">privacy</a></li>
+    <li><a href="http://fontli.tumblr.com" target="blank">blog</a></li>
+    <li><a href="http://www.pramati.com" target="blank">PRAMATI TECHNOLOGIES</a></li>
+  </ul>
+
+  <% if false && perma %>
+    <h5 class='qrcode-links'>
+      Available for <a href="javascript:;" class='apple'>iOS</a> and <a href="javascript:;" class='wp'>WP</a>
+    </h5>
+  <% else %>
+    <h5>
+      Available for FREE on <a href="<%= I18n.t('links.google_play', params: nil)%>" target="blank">Android</a>, <a href="<%= I18n.t('links.itunes', params: '?ls=1&mt=8')%>" target='blank'>iOS</a> and <a href="http://www.windowsphone.com/s?appid=0d09f01f-17de-4757-b63c-a1cb32fbd655" target='blank'>WP</a>
+    </h5>
+  <% end %>
+</div>

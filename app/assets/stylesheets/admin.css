@@ -1,0 +1,102 @@
+body {
+  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+.pagination {
+  float: right;
+  margin: 0;
+}
+
+.pagination a {
+  float: none;
+  border-width: 1px;
+  padding: 5px 10px;
+}
+
+.actions_link > a {
+  margin-right: 15px;
+}
+
+#edit_collection dd {
+  padding-top: 10px;
+}
+
+#edit_collection dd img {
+  width: 280px;
+  height: 200px;
+  padding-bottom: 10px;
+  display: block;
+}
+
+#edit_collection input[type='submit'] {
+  margin-bottom: 0 !important;
+}
+
+.collection_cover_photo img {
+  height: 40px;
+  width: 50px;
+}
+
+#show_user dl {
+  width: 500px;
+}
+
+#show_user #user_photos {
+  clear: both;
+  padding-top: 20px;
+}
+
+#show_user .dl-horizontal dt {
+  width: 70px;
+}
+
+#show_user .dl-horizontal dd {
+  margin-left: 80px;
+}
+
+#user_photos h3 {
+  padding-bottom: 20px;
+}
+
+#user_photos h3 a {
+  margin-left: 15px;
+}
+
+#photo_modal {
+  width: 600px;
+}
+
+span.inline-text {
+  color: #808080;
+  display: inline-block;
+}
+
+ul.typeahead.dropdown-menu {
+  min-width: 275px;
+}
+
+#show_collection #collection_photos {
+  clear: both;
+  padding-top: 20px;
+}
+
+#show_collection .dl-horizontal dt {
+  width: 70px;
+  text-align: left;
+}
+
+#show_collection .dl-horizontal dd {
+  margin-left: 80px;
+}
+
+#collection_photos h3 {
+  padding-bottom: 20px;
+}
+
+.container > div#new_collection {
+  margin-top: 10px;
+}
+
+a.cover_photo_link {
+  display: inline-block
+}

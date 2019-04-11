@@ -1,0 +1,21 @@
+<% u ||= c.user %>
+<% fnts_map ||= [] %>
+<div class="comment">
+  <a class="propic" href="<%= profile_path(u.id) %>">
+    <img src="<%= u.url_thumb %>" width="100%" height="auto">
+    <div class="overlap"></div>
+  </a>
+  <ul>
+    <li class="a">
+      <a href="<%= profile_path(u.id) %>"><span class="name"><%= u.username %></span></a>
+      <span class="time"><%= timestamp(c.created_at) %></span>
+    </li>
+    <li class="b">
+      <span><%= c.body %></span>
+      <% (c.font_tag_ids || []).each do |ft_id| %>
+        <% f = fnts_map[ft_id.to_s] %>
+        <span>Spotted <%= f.display_name %></span>
+      <% end %>
+    </li>
+  </ul>
+</div> <!-- comment -->

@@ -1,0 +1,28 @@
+<% typ = params[:type] || 'post' %>
+<% collection = @users || @photos %>
+
+<% contents = if params[:type] == 'fav' %>
+  <% render '/shared/account_list' %>
+<% else %>
+  <% render '/shared/photo_list' %>
+<% end %>
+
+<% if params[:page] # pagination request %>
+  <% if collection.blank? # stop paginating %>
+    // set the docHeight greater than actual height
+    // and that stops further pagination requests
+    docHeight = getDocHeight() + 10000;
+  <% else %>
+    $('#font_section_container').append('<%= escape_javascript(contents) %>');
+    // set the page JS variables
+    pageNum = parseInt('<%= params[:page] %>');
+    docHeight = getDocHeight();
+    doPagination = true;
+  <% end %>
+  $('.loader').addClass('hidden');
+<% else %>
+  $('#font_section_container').html('<%= escape_javascript(contents) %>');
+  $('.font-detail-cta').removeClass('selected');
+  $(".font-detail-cta.<%= typ %>").addClass('selected');
+  hideAjaxLoader();
+<% end %>

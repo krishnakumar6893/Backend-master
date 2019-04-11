@@ -1,0 +1,52 @@
+<ul class="nav">
+  <li class="<%=  active_class('index') %>">
+    <%= link_to 'Home', admin_path %>
+  </li>
+  <li class="dropdown <%= active_class('users', 'suspended_users', 'users_statistics', 'top_contributors') %>" id="menu1">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Users <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><%= link_to 'All', users_admin_path %></li>
+      <li><%= link_to 'Suspended', suspended_users_admin_path %></li>
+      <li><%= link_to 'Statistics', users_statistics_admin_path %></li>
+      <li><%= link_to 'Top Contributors', top_contributors_admin_path %></li>
+    </ul>
+  </li>
+  <li class="dropdown <%= active_class('photos') %>" id="menu2">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu2">Photos <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><%= link_to 'All', photos_admin_path %></li>
+      <li><%= link_to 'For homepage', photos_admin_path(home: true) %></li>
+      <li><%= link_to 'Unapproved', unapproved_admin_photos_path %></li>
+      <li><%= link_to 'Spam', spam_admin_photos_path %></li>
+      <li><%= link_to 'DeepTypeRequests', deep_type_requests_admin_photos_path %></li>
+    </ul>
+  </li>
+  <li class="dropdown <%= active_class('collections') %>" id="menu6">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu6">Collections <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><%= link_to 'View List', admin_collections_path %></li>
+    </ul>
+  </li>
+  <li class="dropdown <%= active_class('sos') %>" id="menu3">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu3">SoS <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><%= link_to 'Approved', sos_admin_path %></li>
+      <li><%= link_to 'Requested', sos_admin_path(req: true) %></li>
+    </ul>
+  </li>
+  <li class="dropdown <%= active_class('popular_users', 'popular_photos', 'popular_fonts') %>" id="menu4">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu4">Popular Content <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><%= link_to 'Users', popular_users_admin_path %></li>
+      <li><%= link_to 'Photos', popular_photos_admin_path %></li>
+      <li><%= link_to 'Fonts', popular_fonts_admin_path %></li>
+    </ul>
+  </li>
+  <li class="dropdown <%= active_class('flagged_users', 'flagged_photos') %>" id="menu5">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu5">Flagged Content <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><%= link_to 'Users', flagged_users_admin_path  %></li>
+      <li><%= link_to 'Photos', flagged_photos_admin_path %></li>
+    </ul>
+  </li>
+</ul>

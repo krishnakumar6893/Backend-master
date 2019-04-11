@@ -1,0 +1,23 @@
+defaults: &defaults
+  provider: 'AWS'
+  aws_secret_access_key: <%= SECURE_TREE['aws_s3_secret'] %>
+  aws_access_key_id: <%= SECURE_TREE['aws_s3_key'] %>
+  use_s3: false
+
+development:
+  <<: *defaults
+  bucket: "new_fontli_dev"
+
+staging:
+  <<: *defaults
+  bucket: "test.fontli.com"
+  use_s3: true
+
+production:
+  <<: *defaults
+  bucket: "new_fontli_production"
+  use_s3: true
+
+test:
+  <<: *defaults
+  bucket: "new_fontli_test"

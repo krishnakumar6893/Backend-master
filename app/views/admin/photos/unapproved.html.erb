@@ -1,0 +1,4 @@
+<h3><%= 'Unapproved Photos' %> <span class="badge badge-info"><%= @photos.total_count %></span> </h3>
+<%= render 'shared/flash_notices' %>
+<%= render 'admin/photos', photos: @photos, approve_photo: true %>
+<%= paginate @photos %>

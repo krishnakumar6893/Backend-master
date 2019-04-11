@@ -1,0 +1,35 @@
+<% typ = params[:type] || 'post' %>
+<% section = 'profile-post' if typ == 'post' %>
+<% collection = @users || @photos || @fonts || [] %>
+
+<% contents = if params[:type] == 'fav_font' %>
+  <% render '/shared/font_list' %>
+<% elsif ['followers', 'follows'].include? params[:type] %>
+  <% render '/shared/account_list' %>
+<% else %>
+  <% render '/shared/photo_list', :section => section %>
+<% end %>
+
+<% if @photos %>
+  photoIds = <%= sanitize @photos.collect(&:id).to_json %>;
+<% end %>
+
+<% if params[:page] # pagination request %>
+  <% if collection.blank? # stop paginating %>
+    doPagination = false;
+  <% else %>
+    $('#profile_section_container').append('<%= escape_javascript(contents) %>');
+    // set the page JS variables
+    pageNum = parseInt('<%= params[:page] %>');
+    doPagination = <%= collection.length >= 18 %>;
+  <% end %>
+  $('.loader').addClass('hidden');
+<% else %>
+  $('#profile_section_container').html('<%= escape_javascript(contents) %>');
+  $('.profile-cta').removeClass('selected');
+  $(".profile-cta.<%= typ %>").addClass('selected');
+  hideAjaxLoader();
+  //reset the pagination vars
+  pageNum = 1;
+  doPagination = <%= collection.length >= 18 %>;
+<% end %>

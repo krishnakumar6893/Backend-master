@@ -1,0 +1,71 @@
+<% content_for :custom_js do %>
+  $('#update_stat_link').live('click', function(e) {
+    $(this).hide();
+    $('#update_stat_cancel').show();
+    $('#update_stat_form .submit').show();
+    $('#status').html('');
+    $('#update_stat_form').slideDown();
+  });
+
+  $('#update_stat_form').live('ajax:before', function(e) {
+    $('#status').html('Updating...');
+    $('#update_stat_cancel').hide();
+    $('#update_stat_form .submit').hide();
+  });
+
+  $('#update_stat_form').live('ajax:success', function(data, status, xhr) {
+    $('#app_version').html(data['app_version']);
+    $('#app_version').fadeIn();
+    $('#status').html('Updated.');
+    $('#update_stat_form').hide();
+  });
+
+  $('#update_stat_cancel').live('click', function(e) {
+    $('#update_stat_form').hide();
+    $('#update_stat_link').show();
+  });
+<% end %>
+
+<%= render 'shared/flash_notices' %>
+
+<h3>App Stats</h3>
+<ul>
+  <li>Total Users: <%= link_to @admin_presenter.users_count, users_admin_path %></li>
+  <li>New users since <%= Time.now.beginning_of_month %>: <%= @admin_presenter.new_users_count %></li>
+  <li>New users in past 30 days: <%= @admin_presenter.users_in_past_30_days %></li>
+  <li>Users with atleast one photo: <%= @admin_presenter.users_with_photos %></li>
+  <li>Users with just one post: <%= @admin_presenter.users_with_one_photo %></li>
+  <li>Number of users currently active: <%= @admin_presenter.online_users_count %></li> 
+  <li>Users sharing to other platforms: <%= @admin_presenter.users_sharing_to_other_platforms %></li>
+
+  <li>Total Photos: <%= link_to @admin_presenter.photos_count, photos_admin_path %></li>
+  <li>Homepage Photos: <%= link_to @admin_presenter.homepage_photos_count, photos_admin_path(home: true) %></li>
+  <li>Total number of SOS: <%= @admin_presenter.sos_count %></li>
+  <li>SOS with responses: <%= @admin_presenter.sos_with_responses_count %></li>
+  <li>Number of posts shared to other platforms: <%= @admin_presenter.shared_post_count %></li>
+
+  <li>Most photographed location: <%= @admin_presenter.most_photographed_location %></li>
+  <li>Login medium: <%= @admin_presenter.login_medium %></li>
+  <li>
+    App Version: <span id="app_version"><%= @admin_presenter.current_stat.app_version %></span>&nbsp;&nbsp;
+    <%= link_to 'Change', 'javascript:void(0);', :id => 'update_stat_link' %>
+    <%= form_tag update_stat_admin_path, id: 'update_stat_form', method: :put, class: 'form-inline', style: 'display:none; margin-top:10px;' do %>
+      <input class="span1" name="version" type="text" size="10" value='<%= @admin_presenter.current_stat.app_version %>' />
+      <input type="submit" class="submit btn btn-primary" value="Update" />
+      <%= link_to 'Cancel', 'javascript:void(0);', :id => 'update_stat_cancel' %>
+    <% end %>
+    <span id="status">&nbsp;</span>
+  </li>
+</ul><br/>
+
+<h3>Backend Stats</h3>
+<ul>
+  <% @admin_presenter.current_stat.misc_attrs.each do |k, v| %>
+    <li><%= k.humanize %>: <%= link_to v, 'javascript:;' %></li>
+  <% end %>
+</ul><br/>
+
+<h3>Utilities</h3>
+<ul>
+  <li><%= link_to 'Send Push notifications', send_push_notifications_admin_path %> to all users.</li>
+</ul>

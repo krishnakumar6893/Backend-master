@@ -1,0 +1,70 @@
+<% content_for :pre_content do %>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <div id='qr_pop'>
+    <%= render 'shared/qr_popup' %>
+  </div>
+<% end %>
+<% content_for :custom_js do %>
+  photoIds = <%= sanitize @popular.collect(&:id).to_json %>;
+<% end %>
+
+<section id="secondaryHeader">
+<div class="wrapper">
+  <blockquote>
+    <p>
+      <%= @story.text %> <br />
+      <cite><%= @story.name %></cite>
+      <a class='storify-link' href="http://storify.com" target='blank'>Powered by Storify</a>
+    </p>
+  </blockquote>
+  <aside>
+    <button id="join_fontli" href="<%= popular_path(:type => 'post') %>">
+      <span class='join-cta'>
+        Discover
+        <span><%= number_with_delimiter(User.count) %></span>
+        typoholics
+      </span>
+    </button>
+    <div class="share">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.fontli.com" data-text="@fontli, Fontli- discover and share pure type love!"></a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      <div class="fb-like" data-href="http://www.fontli.com/" data-send="false" data-layout="button_count" data-show-faces="false"></div>
+    </div>
+  </aside>
+</div>
+</section>
+
+<section id="banner" class="big">
+<div class="wrap slide-banner">
+  <div id="slider1" class="slider">
+    <ul>
+      <% @popular.each_with_index do |p, i| %>
+      <li data-id='<%= p.id %>' href='<%= show_feed_path(p) %>' rel='popitup'>
+        <div style='background: none no-repeat; width:305px;height:305px;'>
+          <div class="img-shadow"></div>
+          <% if(i < 9) # load only the first 10 images upfront %>
+            <img src="<%= p.url(:medium) %>" style="width:305px;height:305px;" />
+          <% else # rest are loaded later %>
+            <img src="<%= render('/shared/black_img_data') %>" xsrc="<%= p.url(:medium) %>" style="width:305px;height:305px;" />
+          <% end %>
+        </div>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+  <%= render 'shared/controls' %>
+</div>
+</section>
+
+<!-- preload images for popup -->
+<% @popular.each do |p| %>
+  <img xsrc="<%= p.url(:large) %>" class='hidden-img' style="display:none;" />
+<% end %>

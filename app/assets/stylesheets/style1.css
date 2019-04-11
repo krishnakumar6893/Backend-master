@@ -1,0 +1,83 @@
+.grey-box.profile{
+display:none;
+}
+section.profile-post section a{
+display:none!important;
+}
+.block-c{
+display:none;
+}
+.set1.icons{
+display:none;
+}
+.right-pop .like-box a.like{
+	display: none;
+}
+.set3c:hover img:last-child{
+	visibility: hidden;
+}
+.set3c a{
+	cursor: auto;
+}
+.set3b span img{
+	display: none;
+}
+.set3b span{
+	display: block;
+}
+div.set3b span.pop-disclaimer{
+	display: inline-block;
+}
+
+.right-pop .content-b .comment-box .comment img.follow-btn{
+	display: none;
+}
+.user-detail button{
+display:none;
+}
+.mat4,.mat6,section .loc-img{
+display:none;
+}
+
+.unsubscribe-container {
+  background: #ececec;
+  padding: 80px 40px;
+}
+
+.unsubscribe {
+  background: white none repeat scroll 0 0;
+  height: auto;
+  left: 30%;
+  margin: 2px;
+  padding: 10px;
+  position: relative;
+  text-align: left;
+  top: 20%;
+  width: 400px;
+  font-size: 14px;
+}
+
+.unsubscribe h3 {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.unsubscribe p {
+  margin: 8px 0;
+}
+
+.unsubscribe input[type="submit"] {
+  margin: 10px 0;
+}
+
+.unsubscribe .hide {
+  display: none;
+}
+
+.unsubscribe .show {
+  display: block;
+}
+
+.unsubscribe input#description {
+  margin: 5px 25px;
+}

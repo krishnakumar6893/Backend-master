@@ -1,0 +1,15 @@
+<h3><%= @title || 'Photos' %> <span class="badge badge-info"><%= @fotos.total_count %></span> </h3>
+
+<form class="well form-search">
+  <% ['req', 'home', 'user_id'].each do |p| %>
+    <% if params[p.to_sym].present? %>
+      <input type="hidden" name='<%= p %>' value='<%= params[p.to_sym] %>' /> 
+    <% end %>
+  <% end %>
+  <input type="text" name='search' value='<%= params[:search]%>' class="input-medium search-query">
+  <button type="submit" class="btn">Search</button>
+</form>
+
+<%= render 'shared/flash_notices' %>
+<%= render 'photos', photos: @fotos %>
+<%= paginate @fotos %>

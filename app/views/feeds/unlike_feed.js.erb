@@ -1,0 +1,6 @@
+// update the likes count
+$('#likes_cnt_<%= params[:id] %>').html("<%= pluralize(@photo.likes_count, 'like') %>");
+// update the button
+var elem = $('#unlike_<%= params[:id] %>');
+elem.replaceWith("<%= escape_javascript(render_photo_like_button(@photo)) %>");
+hideAjaxLoader();

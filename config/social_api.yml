@@ -1,0 +1,9 @@
+facebook:
+  app_key: <%= SECURE_TREE['fb_app_key'] %>
+  app_secret: <%= SECURE_TREE['fb_app_secret'] %>
+  callback_url: <%= SECURE_TREE['fb_callback'] %>
+
+twitter:
+  app_key: <%= SECURE_TREE['twt_app_key'] %>
+  app_secret: <%= SECURE_TREE['twt_app_secret'] %>
+  callback_url: <%= SECURE_TREE['twt_callback'] %>
