@@ -13,14 +13,13 @@ pipeline {
         branch 'PR-*'
       }
       environment {
-        PREVIEW_VERSION = "0.0.0-SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER"
+        PREVIEW_VERSION = "1.1.1"
         PREVIEW_NAMESPACE = "$APP_NAME-$BRANCH_NAME".toLowerCase()
         HELM_RELEASE = "$PREVIEW_NAMESPACE".toLowerCase()
       }
       steps {
         container('ruby') {
-          sh "docker build -t $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION ."
-          sh "docker push $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
+          sh "export VERSION=1.1.1 && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           dir('./charts/preview') {
             sh "make preview"
@@ -40,9 +39,12 @@ pipeline {
           sh "git checkout master"
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
-          sh "jx step next-version --use-git-tag-only --tag"
-          sh "docker build -t $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION) ."
-          sh "docker push $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
+
+          sh "jx step tag --version 1.1.1"
+          sh "curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64"
+          sh "chmod +x skaffold"
+          sh "mv skaffold /usr/local/bin"
+          sh "export VERSION=1.1.1 && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
         }
       }
