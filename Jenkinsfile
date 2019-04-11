@@ -13,13 +13,13 @@ pipeline {
         branch 'PR-*'
       }
       environment {
-        PREVIEW_VERSION = "2.2.2"
+        PREVIEW_VERSION = "3.3.3"
         PREVIEW_NAMESPACE = "$APP_NAME-$BRANCH_NAME".toLowerCase()
         HELM_RELEASE = "$PREVIEW_NAMESPACE".toLowerCase()
       }
       steps {
         container('ruby') {
-          sh "export VERSION=2.2.2 && skaffold build -f skaffold.yaml"
+          sh "export VERSION=3.3.3 && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           dir('./charts/preview') {
             sh "make preview"
@@ -40,11 +40,11 @@ pipeline {
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
 
-          sh "jx step tag --version 2.2.2"
+          sh "jx step tag --version 3.3.3"
           sh "curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64"
           sh "chmod +x skaffold"
           sh "mv skaffold /usr/local/bin"
-          sh "export VERSION=2.2.2 && skaffold build -f skaffold.yaml"
+          sh "export VERSION=3.3.3 && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
         }
       }
