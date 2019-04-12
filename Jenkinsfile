@@ -13,13 +13,13 @@ pipeline {
         branch 'PR-*'
       }
       environment {
-        PREVIEW_VERSION = "7.7.7"
+        PREVIEW_VERSION = "8.8.8"
         PREVIEW_NAMESPACE = "$APP_NAME-$BRANCH_NAME".toLowerCase()
         HELM_RELEASE = "$PREVIEW_NAMESPACE".toLowerCase()
       }
       steps {
         container('ruby') {
-          sh "export VERSION=7.7.7 && skaffold build -f skaffold.yaml"
+          sh "export VERSION=8.8.8 && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           dir('./charts/preview') {
             sh "make preview"
@@ -40,11 +40,11 @@ pipeline {
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
 
-          sh "jx step tag --version 7.7.7"
+          sh "jx step tag --version 8.8.8"
           sh "curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64"
           sh "chmod +x skaffold"
           sh "mv skaffold /usr/local/bin"
-          sh "export VERSION=7.7.7 && skaffold build -f skaffold.yaml"
+          sh "export VERSION=8.8.8 && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
         }
       }
@@ -67,7 +67,7 @@ pipeline {
             sh "jx step helm release"
 
             // promote through all 'Auto' promotion Environments
-            sh "jx promote -b --all-auto --timeout 1h --version \$(cat VERSION)"
+            sh "jx promote -b --all-auto --timeout 1h --version 8.8.8"
           }
         }
       }
